@@ -3,14 +3,22 @@
     <!-- App Bar -->
     <v-app-bar app dense color="primary">
       <v-spacer />
+      
+      <!-- Centered Title -->
       <v-toolbar-title class="text-center font-weight-bold">
         Online Video Player
       </v-toolbar-title>
+      
       <v-spacer />
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+
+      <!-- Burger Icon shown only when logged in on /home -->
+      <v-app-bar-nav-icon
+        v-if="$auth.loggedIn && $route.path === '/home'"
+        @click.stop="drawer = !drawer"
+      />
     </v-app-bar>
 
-    <!-- Right Drawer -->
+    <!-- Right Navigation Drawer -->
     <v-navigation-drawer
       v-model="drawer"
       app
@@ -44,8 +52,13 @@ export default {
   },
   methods: {
     logout() {
-      this.$auth.logout({ returnTo: process.env.AUTH0_LOGOUT_REDIRECT_URI });
+      this.drawer = false
+      this.$auth.logout({ returnTo: process.env.AUTH0_LOGOUT_REDIRECT_URI })
     }
   }
 }
 </script>
+
+<style scoped>
+/* Optional: Customize title or drawer here */
+</style>
