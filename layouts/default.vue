@@ -44,8 +44,7 @@ export default {
   },
   methods: {
     logout() {
-      alert('Logging out...')
-      // Example: this.$router.push('/login')
+      this.$auth.logout({ returnTo: process.env.AUTH0_LOGOUT_REDIRECT_URI });
     }
   }
 }

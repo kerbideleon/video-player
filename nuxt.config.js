@@ -1,16 +1,12 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
-  // Disable server-side rendering
   ssr: false,
 
-  // Global page headers
   head: {
     titleTemplate: '%s - online-video-player',
-    title: 'online-video-player',
-    htmlAttrs: {
-      lang: 'en'
-    },
+    title: 'Online Video Player',
+    htmlAttrs: { lang: 'en' },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -20,29 +16,58 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
 
-  // Global CSS
   css: [
-    'video.js/dist/video-js.css',                      // video.js styling
-    'nuxt-video-player/src/assets/css/main.css'        // optional wrapper CSS
+    'video.js/dist/video-js.css',
+    'nuxt-video-player/src/assets/css/main.css'
   ],
 
-  // Plugins
   plugins: [
-    { src: '~/plugins/videojs.js', mode: 'client' }     // video.js plugin
+    { src: '~/plugins/videojs.js', mode: 'client' }
   ],
 
-  // Auto import components
   components: true,
 
-  // Modules for dev and build
   buildModules: [
     '@nuxtjs/vuetify'
   ],
 
-  // Nuxt modules
-  modules: [],
+  modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next'
+  ],
 
-  // Vuetify configuration
+  auth: {
+    redirect: {
+      login: '/welcome',                  // Shown to unauthenticated users
+      logout: '/welcome',                // After logout
+      callback: '/callback',             // Where Auth0 redirects after login
+      home: '/home'                      // After successful login
+    },
+    cookie: {
+      options: {
+        secure: true,
+        domain: '.vercel.app'           // Needed for Vercel deployment
+      }
+    },
+    strategies: {
+      auth0: {
+        domain: process.env.AUTH0_DOMAIN,
+        clientId: process.env.AUTH0_CLIENT_ID,
+        clientSecret: process.env.AUTH0_CLIENT_SECRET,
+        audience: '',
+        responseType: 'code',
+        codeChallengeMethod: '',
+        redirectUri: process.env.AUTH0_REDIRECT_URI,
+        logoutRedirectUri: process.env.AUTH0_LOGOUT_REDIRECT_URI,
+        scope: ['openid', 'profile', 'email']
+      }
+    }
+  },
+
+  axios: {
+    baseURL: '/'
+  },
+
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
@@ -61,11 +86,14 @@ export default {
     }
   },
 
-  // Build configuration
   build: {
     transpile: ['video.js', 'videojs-youtube'],
     extend(config) {
       config.resolve.alias.videojs = 'video.js'
     }
+  },
+
+  router: {
+    middleware: [] // You can add ['auth'] for global protection if needed
   }
 }
