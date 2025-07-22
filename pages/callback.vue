@@ -11,6 +11,6 @@
 
 <script>
 export default {
-  middleware: 'auth', // This ensures auth handles the callback automatically
+  middleware: 'auth',
 }
 </script>
