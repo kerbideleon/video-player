@@ -24,8 +24,10 @@
               <video-player
                 :src="localSrc"
                 playsinline
+                webkit-playsinline
+                x-webkit-airplay="allow"
                 controls
-                allowFullscreen
+                :playerOptions="localPlayerOptions"
               />
             </div>
           </v-card-text>
@@ -64,7 +66,7 @@
                 techOrder="youtube"
                 playsinline
                 controls
-                allowFullscreen
+                :playerOptions="youtubePlayerOptions"
               />
             </div>
           </v-card-text>
@@ -84,6 +86,31 @@ export default {
       localSrc: null,
       youtubeUrl: '',
       youtubeSrc: null
+    }
+  },
+  computed: {
+    localPlayerOptions() {
+      return {
+        techOrder: ['html5'],
+        controlBar: {
+          fullscreenToggle: true
+        },
+        html5: {
+          nativeControlsForTouch: false
+        }
+      }
+    },
+    youtubePlayerOptions() {
+      return {
+        techOrder: ['youtube'],
+        controlBar: {
+          fullscreenToggle: true
+        },
+        youtube: {
+          modestbranding: 1,
+          rel: 0
+        }
+      }
     }
   },
   methods: {
@@ -117,5 +144,16 @@ export default {
   top: 5px;
   right: 5px;
   z-index: 10;
+}
+
+video {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+}
+
+.vjs-fullscreen video {
+  width: 100vw !important;
+  height: 100vh !important;
 }
 </style>
