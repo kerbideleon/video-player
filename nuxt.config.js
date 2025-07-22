@@ -53,10 +53,7 @@ export default {
       auth0: {
         domain: process.env.AUTH0_DOMAIN,
         clientId: process.env.AUTH0_CLIENT_ID,
-        clientSecret: process.env.AUTH0_CLIENT_SECRET,
         audience: '',
-        responseType: 'code',
-        codeChallengeMethod: '',
         redirectUri: process.env.AUTH0_REDIRECT_URI,
         logoutRedirectUri: process.env.AUTH0_LOGOUT_REDIRECT_URI,
         scope: ['openid', 'profile', 'email']

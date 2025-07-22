@@ -18,7 +18,8 @@
 export default {
   methods: {
     login() {
-      this.$auth.loginWithRedirect()
+      // ✅ Correct way to trigger Auth0 login in Nuxt Auth
+      this.$auth.loginWith('auth0')
     }
   }
 }
