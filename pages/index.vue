@@ -1,11 +1,12 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row dense>
       <!-- Local Upload Section -->
       <v-col cols="12" md="6">
-        <v-card outlined>
+        <v-card outlined color="primary" dark>
           <v-card-title>
-            <span class="headline">📁 Local Video Upload</span>
+            <v-icon class="mr-2">mdi-folder-video</v-icon>
+            <span class="headline font-weight-bold">Local Video Upload</span>
           </v-card-title>
 
           <v-card-text>
@@ -13,6 +14,9 @@
               label="Choose a video file"
               accept="video/*"
               outlined
+              dense
+              hide-details
+              color="white"
               @change="onFileChange"
               :disabled="!!localSrc"
             />
@@ -36,9 +40,10 @@
 
       <!-- YouTube Video Section -->
       <v-col cols="12" md="6">
-        <v-card outlined>
+        <v-card outlined color="primary" dark>
           <v-card-title>
-            <span class="headline">📺 YouTube Link</span>
+            <v-icon class="mr-2">mdi-youtube</v-icon>
+            <span class="headline font-weight-bold">YouTube Link</span>
           </v-card-title>
 
           <v-card-text>
@@ -46,13 +51,18 @@
               label="Paste YouTube URL"
               v-model="youtubeUrl"
               outlined
+              dense
+              hide-details
+              color="white"
               :disabled="!!youtubeSrc"
             />
+
             <v-btn
-              color="blue"
+              block
+              color="red darken-1"
+              class="mb-3"
               @click="playYouTube"
               :disabled="!youtubeUrl || youtubeSrc"
-              class="mb-3"
             >
               Play YouTube
             </v-btn>
